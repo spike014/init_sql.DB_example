@@ -6,6 +6,10 @@ import (
 	"how-to-init-sql.DB/dao/model"
 )
 
+type userCRUD interface { // 可进行 mock，用于调用者的测试中
+	Create(user *model.User) error
+}
+
 type userDao struct {
 	db *gorm.DB
 }
