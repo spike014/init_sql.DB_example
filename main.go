@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	err := dao.User.Create(&model.User{Username: "spike014", Password: "你猜猜", Email: "l1ng14@foxmail.com"})
+	err := dao.User().Create(&model.User{Username: "spike014", Password: "你猜猜", Email: "l1ng14@foxmail.com"})
 	if err != nil {
 		log.Println("Insert user fail:", err)
 	}
