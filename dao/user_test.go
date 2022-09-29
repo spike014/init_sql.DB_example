@@ -12,18 +12,18 @@ import (
 
 func TestInsertuser(t *testing.T) {
 	t.Run("pos", func(t *testing.T) {
-		user := model.User{Username: "testuser_Name", Password: "test"}
+		userTest := model.User{Username: "testuser_Name", Password: "test"}
 		mock := internal.Mock4Test(t)
 
 		mock.SqlMock.ExpectBegin()
 		mock.SqlMock.ExpectExec(regexp.QuoteMeta(
 			"INSERT INTO `users` (`username`,`password`,`email`) VALUES (?,?,?)")).
-			WithArgs(user.Username, user.Password, user.Email).WillReturnResult(sqlmock.NewResult(1, 1))
+			WithArgs(userTest.Username, userTest.Password, userTest.Email).WillReturnResult(sqlmock.NewResult(1, 1))
 		mock.SqlMock.ExpectCommit()
 		defer mock.SqlDB.Close()
 
-		userDao := &userDao{mock.GormDB}
-		err := userDao.Create(&user)
+		user = &userDao{mock.GormDB}
+		err := User().Create(&userTest)
 		assert.Nil(t, err)
 		err = mock.SqlMock.ExpectationsWereMet()
 		assert.Nil(t, err)
